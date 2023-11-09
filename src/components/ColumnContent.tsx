@@ -1,30 +1,16 @@
+import { useContext } from 'react';
+import BoardContext from '../context/board-context';
 import classes from './ColumnContent.module.css';
-import TodoItem from './TodoItem';
+import TaskItem from './TaskItem';
 
 function ColumnContent() {
+  const BoardCtx = useContext(BoardContext);
+
   return (
     <ul className={classes['column-content']}>
-      <TodoItem></TodoItem>
-      <TodoItem></TodoItem>
-      <TodoItem></TodoItem>
-      <TodoItem></TodoItem>
-      <TodoItem></TodoItem>
-      <TodoItem></TodoItem>
-      <TodoItem></TodoItem>
-      <TodoItem></TodoItem>
-      <TodoItem></TodoItem>
-      <TodoItem></TodoItem>
-      <TodoItem></TodoItem>
-      <TodoItem></TodoItem>
-      <TodoItem></TodoItem>
-      <TodoItem></TodoItem>
-      <TodoItem></TodoItem>
-      <TodoItem></TodoItem>
-      <TodoItem></TodoItem>
-      <TodoItem></TodoItem>
-      <TodoItem></TodoItem>
-      <TodoItem></TodoItem>
-      <TodoItem></TodoItem>
+      {BoardCtx?.tasks.map((task) => (
+        <TaskItem id={task.id} text={task.text} status={task.status} />
+      ))}
     </ul>
   );
 }

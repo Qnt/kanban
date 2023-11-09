@@ -1,5 +1,6 @@
-.todo-item {
+.task-item {
   display: flex;
   flex-direction: column;
   border-radius: 6px;
+  height: 2rem;
 }

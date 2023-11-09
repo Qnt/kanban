@@ -4,7 +4,7 @@
   flex-direction: row;
   align-items: flex-start;
   gap: 1rem;
-  max-height: 500px;
+  height: 500px;
   width: 100vw;
 
   list-style: none;

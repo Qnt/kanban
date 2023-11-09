@@ -3,7 +3,7 @@
   flex-direction: column;
   gap: 4px;
   border-radius: 10px;
-  max-height: inherit;
+  height: inherit;
   list-style: none;
   padding: 4px;
   border: 1px blue solid;

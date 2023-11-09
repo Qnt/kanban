@@ -8,7 +8,7 @@ function Column() {
     <li className={classes.column}>
       <ColumnHeader />
       <ColumnContent />
-      <Adder type="todo" />
+      <Adder type="task" />
     </li>
   );
 }
