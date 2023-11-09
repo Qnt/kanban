@@ -1,0 +1,16 @@
+.board {
+  padding: 0 60px;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  gap: 1rem;
+  max-height: 500px;
+  width: 100vw;
+
+  list-style: none;
+}
+
+.board > li {
+  border-radius: 10px;
+  width: 300px;
+}

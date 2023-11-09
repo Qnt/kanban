@@ -1,0 +1,6 @@
+.header {
+  display: flex;
+  padding: 4px;
+  border-radius: 6px;
+  border: 1px blue solid;
+}

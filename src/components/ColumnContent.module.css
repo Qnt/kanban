@@ -1,0 +1,10 @@
+.column-content {
+  border: 1px blue solid;
+  flex-grow: 1;
+  list-style: none;
+  padding: 4px;
+  overflow-y: scroll;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}

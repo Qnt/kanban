@@ -1,0 +1,7 @@
+.adder {
+  background-color: bisque;
+  border-radius: 6px;
+  padding: 4px;
+  border: 1px blue solid;
+  box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.1);
+}
