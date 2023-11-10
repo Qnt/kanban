@@ -9,7 +9,12 @@ function ColumnContent() {
   return (
     <ul className={classes['column-content']}>
       {BoardCtx?.tasks.map((task) => (
-        <TaskItem id={task.id} text={task.text} status={task.status} />
+        <TaskItem
+          key={task.id}
+          id={task.id}
+          text={task.text}
+          status={task.status}
+        />
       ))}
     </ul>
   );

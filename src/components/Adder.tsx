@@ -23,7 +23,7 @@ function Adder(props: AdderProps) {
   switch (props.type) {
     case 'column': {
       content = (
-        <li className={classes.adder} onClick={handleClick}>
+        <li className={classes.adder}>
           <p>Add</p>
         </li>
       );

@@ -13,7 +13,18 @@ function boardReducer(
   switch (action.type) {
     case 'ADD':
       return { tasks: [...state.tasks, action.payload] };
-
+    case 'DELETE': {
+      const filtredTasks = state.tasks.filter(
+        (task) => task.id !== action.payload,
+      );
+      return { tasks: [...filtredTasks] };
+    }
+    case 'UPDATE': {
+      const unchangedTasks = state.tasks.filter(
+        (task) => task.id !== action.payload.id,
+      );
+      return { tasks: [...unchangedTasks, action.payload] };
+    }
     default:
       return state;
   }
