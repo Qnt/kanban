@@ -1,9 +1,15 @@
 import { ReactNode, useReducer } from 'react';
-import { ActionType, BoardStateType, Task } from '../@types/kanban';
+import {
+  ActionType,
+  BoardContextType,
+  BoardStateType,
+  TColumn,
+  Task,
+} from '../@types/kanban';
 import BoardContext from './board-context';
 
 const defaultBoardState: BoardStateType = {
-  tasks: [],
+  columns: [],
 };
 
 function boardReducer(
@@ -11,19 +17,65 @@ function boardReducer(
   action: ActionType,
 ): BoardStateType {
   switch (action.type) {
-    case 'ADD':
-      return { tasks: [...state.tasks, action.payload] };
-    case 'DELETE': {
-      const filtredTasks = state.tasks.filter(
-        (task) => task.id !== action.payload,
+    case 'ADD_TASK': {
+      const targetColumn = state.columns.find(
+        (column) => column.id === action.payload.status,
+      ) as TColumn;
+      const updatedColumn: TColumn = {
+        id: targetColumn.id,
+        title: targetColumn.title,
+        tasks: new Map(targetColumn.tasks.entries()).set(
+          action.payload.id,
+          action.payload,
+        ),
+      };
+      const unchangedColumns = state.columns.filter(
+        (column) => column.id !== targetColumn.id,
       );
-      return { tasks: [...filtredTasks] };
+      return {
+        columns: [...unchangedColumns, updatedColumn].sort(
+          (a, b) => a.id - b.id,
+        ),
+      };
     }
-    case 'UPDATE': {
-      const unchangedTasks = state.tasks.filter(
-        (task) => task.id !== action.payload.id,
+    case 'DELETE_TASK': {
+      return {};
+      // const filtredTasks = state.tasks.filter(
+      //   (task) => task.id !== action.payload,
+      // );
+      // return { columns: state.columns, tasks: [...filtredTasks] };
+    }
+    case 'UPDATE_TASK': {
+      const targetColumn = state.columns.find(
+        (column) => column.id === action.payload.status,
+      ) as TColumn;
+      const updatedColumn = {
+        id: targetColumn.id,
+        title: targetColumn.title,
+        tasks: new Map(targetColumn.tasks.entries()).set(
+          action.payload.id,
+          action.payload,
+        ),
+      };
+      const unchangedColumns = state.columns.filter(
+        (column) => column.id !== targetColumn.id,
       );
-      return { tasks: [...unchangedTasks, action.payload] };
+      return {
+        columns: [...unchangedColumns, updatedColumn].sort(
+          (a, b) => a.id - b.id,
+        ),
+      };
+    }
+    case 'ADD_COLUMN': {
+      return {
+        columns: [...state.columns, action.payload],
+      };
+    }
+    case 'DELETE_COLUMN': {
+      const filtredColumns = state.columns.filter(
+        (column) => column.id !== action.payload,
+      );
+      return { columns: [...filtredColumns] };
     }
     default:
       return state;
@@ -34,20 +86,37 @@ function BoardContextProvider({ children }: { children: ReactNode }) {
   const [boardState, dispatch] = useReducer(boardReducer, defaultBoardState);
 
   function addTask(task: Task) {
-    dispatch({ type: 'ADD', payload: task });
+    dispatch({ type: 'ADD_TASK', payload: task });
   }
   function deleteTask(id: number) {
-    dispatch({ type: 'DELETE', payload: id });
+    dispatch({ type: 'DELETE_TASK', payload: id });
   }
   function updateTask(task: Task) {
-    dispatch({ type: 'UPDATE', payload: task });
+    dispatch({ type: 'UPDATE_TASK', payload: task });
+  }
+  function addColumn(column: TColumn) {
+    dispatch({ type: 'ADD_COLUMN', payload: column });
+  }
+  function deleteColumn(id: number) {
+    dispatch({ type: 'DELETE_COLUMN', payload: id });
   }
 
-  const boardContext = {
-    tasks: boardState.tasks,
+  function getIdForNewColumn() {
+    const allColumnIds = boardState.columns.map((column) => column.id);
+    if (allColumnIds.length === 0) {
+      return 0;
+    }
+    return allColumnIds[allColumnIds.length - 1] + 1;
+  }
+
+  const boardContext: BoardContextType = {
+    columns: boardState.columns,
     addTask,
     deleteTask,
     updateTask,
+    addColumn,
+    deleteColumn,
+    getIdForNewColumn,
   };
 
   return (

@@ -1,14 +1,13 @@
 import { useContext } from 'react';
+import { Task } from '../@types/kanban';
 import BoardContext from '../context/board-context';
 import classes from './ColumnContent.module.css';
 import TaskItem from './TaskItem';
 
-function ColumnContent() {
-  const BoardCtx = useContext(BoardContext);
-
+function ColumnContent({ columnTasks }: { columnTasks: Map<number, Task> }) {
   return (
     <ul className={classes['column-content']}>
-      {BoardCtx?.tasks.map((task) => (
+      {Array.from(columnTasks.values()).map((task) => (
         <TaskItem
           key={task.id}
           id={task.id}

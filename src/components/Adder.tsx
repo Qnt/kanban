@@ -1,22 +1,33 @@
 import { HTMLAttributes, useContext } from 'react';
-import { Task } from '../@types/kanban';
+import { TColumn, Task } from '../@types/kanban';
 import BoardContext from '../context/board-context';
 import classes from './Adder.module.css';
 
 interface AdderProps extends HTMLAttributes<HTMLElement> {
   type: 'column' | 'task';
+  columnId: number;
 }
 
 function Adder(props: AdderProps) {
   const boardCtx = useContext(BoardContext);
 
-  function handleClick() {
+  function handleAddTask() {
     const newTask: Task = {
       id: Math.random(),
       text: '',
-      status: 'TODO',
+      status: props.columnId,
     };
     boardCtx?.addTask(newTask);
+  }
+
+  function handleAddColumn() {
+    const newColumn: TColumn = {
+      id: boardCtx?.getIdForNewColumn() as number,
+      title: 'New Column',
+      tasks: new Map(),
+    };
+
+    boardCtx?.addColumn(newColumn);
   }
 
   let content: JSX.Element;
@@ -24,16 +35,16 @@ function Adder(props: AdderProps) {
     case 'column': {
       content = (
         <li className={classes.adder}>
-          <p>Add</p>
+          <button onClick={handleAddColumn}>Add</button>
         </li>
       );
       break;
     }
     case 'task': {
       content = (
-        <div className={classes.adder} onClick={handleClick}>
-          <p>Add</p>
-        </div>
+        <button className={classes.adder} onClick={handleAddTask}>
+          Add
+        </button>
       );
       break;
     }

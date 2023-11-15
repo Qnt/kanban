@@ -1,17 +1,19 @@
 import { useContext, useEffect, useRef, useState } from 'react';
+import TextareaAutosize from 'react-textarea-autosize';
 import { Task } from '../@types/kanban';
 import BoardContext from '../context/board-context';
 import classes from './TaskItem.module.css';
 
-function TaskItem({ id, text, state }: Task) {
+function TaskItem({ id, text, status }: Task) {
   const [isEditing, setIsEditing] = useState(false);
-  const textRef = useRef<HTMLLIElement>(null);
+  const textareaRef = useRef<HTMLTextAreaElement>(null);
+  const divRef = useRef<HTMLDivElement>(null);
   const boardCtx = useContext(BoardContext);
 
   useEffect(() => {
-    if (isEditing && textRef.current) {
+    if (isEditing && textareaRef.current) {
       setTimeout(() => {
-        textRef.current?.focus();
+        textareaRef.current?.focus();
       }, 0);
     }
   }, [isEditing]);
@@ -23,22 +25,32 @@ function TaskItem({ id, text, state }: Task) {
   function handleOnBlur() {
     setIsEditing(false);
     boardCtx?.updateTask({
+      text: textareaRef.current!.value,
       id,
-      text: textRef.current!.textContent,
-      status: 'TODO',
+      status,
     } as Task);
   }
 
-  return (
-    <li
-      tabIndex={-1}
+  const content: JSX.Element = isEditing ? (
+    <TextareaAutosize
+      className={classes['textarea']}
+      ref={textareaRef}
+      onBlur={handleOnBlur}
+      defaultValue={divRef.current!.textContent as string}
+    ></TextareaAutosize>
+  ) : (
+    <div
       className={classes['task-item']}
       contentEditable={isEditing}
       onDoubleClick={handleDoubleClick}
-      onBlur={handleOnBlur}
-      ref={textRef}
-    ></li>
+      ref={divRef}
+      draggable
+    >
+      {text}
+    </div>
   );
+
+  return <li>{content}</li>;
 }
 
 export default TaskItem;

@@ -1,10 +1,21 @@
+.textarea,
 .task-item {
-  display: flex;
-  flex-direction: column;
   border-radius: 6px;
   min-height: 2rem;
   height: fit-content;
   border: 1px blue solid;
   box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.1);
   padding: 4px;
+}
+
+.task-item {
+  display: flex;
+  flex-direction: column;
+  white-space: pre-line;
+}
+
+.textarea {
+  width: 100%;
+  resize: none;
+  height: fit-content;
 }
