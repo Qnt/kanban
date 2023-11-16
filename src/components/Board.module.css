@@ -12,6 +12,5 @@
 
 .board > li {
   flex-shrink: 0;
-  border-radius: 10px;
   width: 300px;
 }

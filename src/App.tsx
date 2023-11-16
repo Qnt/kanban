@@ -1,6 +1,6 @@
 import { useContext } from 'react';
 import classes from './App.module.css';
-import Adder from './components/Adder';
+import AddColumnButton from './components/AddColumnButton';
 import Board from './components/Board';
 import Column from './components/Column';
 import BoardContext from './context/board-context';
@@ -18,7 +18,7 @@ function App() {
           tasks={column.tasks}
         />
       ))}
-      <Adder type="column" />
+      <AddColumnButton />
     </Board>
   );
 }
