@@ -1,4 +1,4 @@
-import { useContext, useRef, useState } from 'react';
+import { KeyboardEvent, useContext, useRef, useState } from 'react';
 import BoardContext from '../context/board-context';
 import classes from './ColumnHeader.module.css';
 import Card from './ui/Card';
@@ -22,7 +22,7 @@ function ColumnHeader({ id, title }: { id: number; title: string }) {
     boardCtx?.deleteColumn(id);
   }
 
-  function handleKeyDown(event: KeyboardEvent) {
+  function handleKeyDown(event: KeyboardEvent<HTMLInputElement>) {
     if (event.key === 'Enter') {
       setIsEditing(false);
       boardCtx?.updateColumnTitle(id, inputRef.current?.value ?? '');

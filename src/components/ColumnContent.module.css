@@ -1,5 +1,4 @@
 .column-content {
-  /* border: 1px blue solid; */
   display: flex;
   flex-direction: column;
   flex-grow: 1;
