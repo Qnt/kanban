@@ -17,6 +17,7 @@ export type BoardContextType = {
   updateTask: (task: Task) => void;
   addColumn: (column: Column) => void;
   deleteColumn: (id: number) => void;
+  updateColumnTitle: (id: number, title: string) => void;
   getIdForNewColumn: () => number;
 };
 
@@ -25,7 +26,8 @@ export type ActionType =
   | { type: 'DELETE_TASK'; payload: number }
   | { type: 'UPDATE_TASK'; payload: Task }
   | { type: 'ADD_COLUMN'; payload: Column }
-  | { type: 'DELETE_COLUMN'; payload: number };
+  | { type: 'DELETE_COLUMN'; payload: number }
+  | { type: 'UPDATE_COLUMN'; payload: { id: number; newTitle: string } };
 
 export type BoardStateType = {
   columns: Column[];

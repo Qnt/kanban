@@ -18,7 +18,6 @@ function App() {
           tasks={column.tasks}
         />
       ))}
-      <AddColumnButton />
     </Board>
   );
 }

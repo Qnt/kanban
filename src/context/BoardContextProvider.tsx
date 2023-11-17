@@ -77,6 +77,22 @@ function boardReducer(
       );
       return { columns: [...filtredColumns] };
     }
+    case 'UPDATE_COLUMN': {
+      const targetColumn = state.columns.find(
+        (column) => column.id === action.payload.id,
+      ) as TColumn;
+      const updatedColumn = {
+        ...targetColumn,
+        title: action.payload.newTitle,
+      } as TColumn;
+      return {
+        columns: [
+          ...state.columns.map((column) => {
+            return column.id === action.payload.id ? updatedColumn : column;
+          }),
+        ],
+      };
+    }
     default:
       return state;
   }
@@ -100,6 +116,9 @@ function BoardContextProvider({ children }: { children: ReactNode }) {
   function deleteColumn(id: number) {
     dispatch({ type: 'DELETE_COLUMN', payload: id });
   }
+  function updateColumnTitle(id: number, newTitle: string) {
+    dispatch({ type: 'UPDATE_COLUMN', payload: { id, newTitle } });
+  }
 
   function getIdForNewColumn() {
     const allColumnIds = boardState.columns.map((column) => column.id);
@@ -116,6 +135,7 @@ function BoardContextProvider({ children }: { children: ReactNode }) {
     updateTask,
     addColumn,
     deleteColumn,
+    updateColumnTitle,
     getIdForNewColumn,
   };
 

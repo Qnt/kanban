@@ -9,7 +9,7 @@ function AddColumnButton() {
   function handleAddColumn() {
     const newColumn: TColumn = {
       id: boardCtx?.getIdForNewColumn() as number,
-      title: 'New Column',
+      title: 'Untitled',
       tasks: new Map(),
     };
 
@@ -17,9 +17,9 @@ function AddColumnButton() {
   }
 
   return (
-    <li className={classes.adder}>
-      <button onClick={handleAddColumn}>Add</button>
-    </li>
+    <button className={classes.adder} onClick={handleAddColumn}>
+      +
+    </button>
   );
 }
 

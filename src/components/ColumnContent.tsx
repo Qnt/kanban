@@ -1,6 +1,4 @@
-import { useContext } from 'react';
 import { Task } from '../@types/kanban';
-import BoardContext from '../context/board-context';
 import classes from './ColumnContent.module.css';
 import TaskItem from './TaskItem';
 

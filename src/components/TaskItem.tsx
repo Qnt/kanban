@@ -31,26 +31,29 @@ function TaskItem({ id, text, status }: Task) {
     } as Task);
   }
 
-  const content: JSX.Element = isEditing ? (
-    <TextareaAutosize
-      className={classes['textarea']}
-      ref={textareaRef}
-      onBlur={handleOnBlur}
-      defaultValue={divRef.current!.textContent as string}
-    ></TextareaAutosize>
-  ) : (
-    <div
-      className={classes['task-item']}
-      contentEditable={isEditing}
-      onDoubleClick={handleDoubleClick}
-      ref={divRef}
-      draggable
-    >
-      {text}
-    </div>
+  return (
+    <li>
+      {isEditing && (
+        <TextareaAutosize
+          className={classes['textarea']}
+          ref={textareaRef}
+          onBlur={handleOnBlur}
+          defaultValue={divRef.current!.textContent as string}
+        ></TextareaAutosize>
+      )}
+      {!isEditing && (
+        <p
+          className={classes['task-item']}
+          contentEditable={isEditing}
+          onDoubleClick={handleDoubleClick}
+          ref={divRef}
+          draggable
+        >
+          {text}
+        </p>
+      )}
+    </li>
   );
-
-  return <li>{content}</li>;
 }
 
 export default TaskItem;
